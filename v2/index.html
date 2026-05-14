@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>미니멀리즘 레벨 테스트 PREMIUM V2</title>
+<meta name="description" content="20개 논문 기반 프리미엄 미니멀리즘 레벨 테스트 최종판">
+<link rel="stylesheet" href="../premium/style.css">
+<link rel="stylesheet" href="v2.css">
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="loader" id="loader">
+  <div class="portal">
+    <div class="portalRing"><div class="portalGlow"></div></div>
+    <div class="loaderTitle">개인 리포트를 생성하는 중입니다</div>
+    <div class="loaderStep" id="loaderStep">소유량 패턴 분석 중</div>
+    <div class="loaderSub">20개 논문 기반 규칙으로 생활 서사를 조합하고 있습니다.</div>
+  </div>
+</div>
+<div class="completeToast" id="completeToast">단계 분석 완료</div>
+<div class="wrap">
+<section class="hero glass" id="hero">
+  <div class="heroMain">
+    <div class="brand"><div class="logo"></div><div>Minimalism Level Test PREMIUM V2</div></div>
+    <div class="tag"><span class="dot"></span>20개 논문 기반 · 프리미엄 상담 리포트</div>
+    <h1>
+      <span class="heroLine"><span class="grad">당신은 적게 가진 사람인가,</span></span><br>
+      <span class="heroLine"><span class="grad">정확히 남길 줄 아는 사람인가.</span></span>
+    </h1>
+    <p class="sub">미니멀리즘은 가난해지는 기술이 아니라, 내 삶의 주도권을 물건에게서 다시 가져오는 기술입니다. 이 검사는 10개 척도로 생활 비용, 감정 비용, 관리 비용, 비교 비용을 분석합니다.</p>
+    <div class="notice">버린다는 것은 상실이 아니라, 더 중요한 것을 위한 공간을 회복하는 일입니다. 좋은 미니멀리즘은 적게 사는 사람이 아니라, 무엇을 남길지 아는 사람을 만듭니다.</div>
+    <div class="badgeRow">
+      <div class="topBadge">60문항 · 10개 척도</div>
+      <div class="topBadge">12유형 · 프리미엄 해설</div>
+      <div class="topBadge">응답 신뢰도 지표</div>
+      <div class="topBadge">결과 카드 저장</div>
+    </div>
+    <div class="row"><input id="nameInput" value="나의" placeholder="이름 또는 별명"><button class="btn gold" onclick="startTest()">검사 시작</button></div>
+    <div class="actions"><button class="btn secondary" onclick="demoResult()">데모 즉시 결과 보기</button><button class="btn secondary" onclick="scrollToSection('evidenceIntro')">논문 근거 보기</button></div>
+  </div>
+  <div class="side heroSide">
+    <div class="metrics">
+      <div class="metric"><strong>60</strong><span>10개 척도 × 6문항<br>10문항씩 6단계 진행</span></div>
+      <div class="metric"><strong>12</strong><span>대표 유형 세분화<br>전용 아이콘과 색상 적용</span></div>
+      <div class="metric"><strong>6</strong><span>응답 신뢰도 지표<br>일관성·극단·중앙 응답 점검</span></div>
+      <div class="metric"><strong>학습형</strong><span>검사 후 미니멀리즘의 심리학과 철학을 함께 학습</span></div>
+    </div>
+    <div class="mini"><b>핵심 설계</b><span>미니멀한 이미지 소비와 실제 저소비 생활양식, 강제 절약과 자발적 단순성을 분리합니다.</span></div>
+    <div class="mini"><b>결과의 질문</b><span>얼마나 버렸는가보다 이 물건이 내 회복을 돕는가, 시간을 빼앗는가, 정체성을 대신하고 있는가를 묻습니다.</span></div>
+  </div>
+</section>
+
+<div class="progress glass hide" id="progressBox"><div class="small" id="countText">0/60</div><div class="bar"><div class="fill" id="fill"></div></div><div class="small" id="stageText">1/6 단계</div></div>
+
+<section id="testArea" class="hide">
+  <div class="sectionHead"><div><h2 id="stageTitle">검사 문항</h2><p id="stageDesc">현재 생활 기준으로 답하세요.</p></div><div class="chipRow"><span class="chip">5점 척도</span><span class="chip">60문항</span><span class="chip">자동 저장</span></div></div>
+  <div class="stageHero" id="stageHero"></div>
+  <div id="stageBox"></div>
+  <div class="warn" id="warn"></div>
+  <div class="bottom"><button class="btn secondary" onclick="prevStage()">이전 단계</button><button class="btn" onclick="nextStage()" id="nextBtn">다음 단계</button><button class="btn gold hide" onclick="analyzeWithFx()" id="analyzeBtn">결과 분석하기</button><button class="btn secondary" onclick="resetAnswers()">초기화</button></div>
+</section>
+
+<section id="evidenceIntro" class="glass evidenceIntro">
+  <div class="sectionHead sectionTop"><div><h2>검사의 핵심 근거</h2><p>20개 논문은 문항과 결과 리포트의 구조를 만드는 근거입니다.</p></div><div class="chipRow"><span class="chip">내용타당도</span><span class="chip">학습형 리포트</span></div></div>
+  <div class="grid3" id="evidencePreview"></div>
+</section>
+
+<section id="report" class="report">
+  <div class="nav"><button onclick="scrollToSection('summary')">요약</button><button onclick="scrollToSection('story')">개인 서사</button><button onclick="scrollToSection('why')">진짜 이유</button><button onclick="scrollToSection('axisReport')">점수</button><button onclick="scrollToSection('reliability')">신뢰도</button><button onclick="scrollToSection('premiumType')">유형 해설</button><button onclick="scrollToSection('learningGuide')">학습</button></div>
+  <div class="reportHero glass" id="summary"><div class="badge" id="resultCard"><div><div class="demoBadge" id="demoBadge">샘플 응답으로 생성된 데모 리포트</div><div class="typeIcon" id="typeIcon">✦</div><div class="gauge"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8"></circle><circle cx="60" cy="60" r="48" fill="none" stroke="var(--type)" stroke-width="8" stroke-linecap="round" stroke-dasharray="301.59" stroke-dashoffset="301.59" id="gaugeCircle"></circle></svg><div class="gaugeVal">종합</div></div><div class="score code" id="scoreText">0</div><div class="level" id="levelName">레벨 분석</div><div class="type" id="typeName">유형 분석</div></div></div><div class="copy"><div class="stamp">PREMIUM RESEARCH REPORT</div><h2 id="reportTitle">미니멀리즘 결과 리포트</h2><div class="keyline" id="keyline">당신의 핵심 문장</div><p id="summaryText"></p><div class="grid3" id="summaryCards"></div></div></div>
+  <div class="card wide" id="story"><h3>오늘의 핵심</h3><div id="storyText"></div></div>
+  <div class="grid3" id="why"></div>
+  <div class="grid2" id="axisReport"><div class="visualCard"><h3>10개 척도 레이더</h3><div id="radar"></div><p>강점 축은 빛나는 점으로, 병목 축은 주황 경고점으로 표시됩니다.</p></div><div class="visualCard"><h3>위험 신호 프로필</h3><div id="riskBars"></div><p>위험 신호는 성격 문제가 아니라 생활 설계에서 먼저 줄여야 할 압력입니다.</p></div></div>
+  <div class="card wide"><h3>축별 상세 점수</h3><div id="axisBars"></div></div>
+  <div class="card wide" id="reliability"><h3>응답 신뢰도 정밀 점검</h3><div class="grid3" id="reliabilityCards"></div><div id="validityBox"></div></div>
+  <div class="card wide" id="premiumType"><h3>프리미엄 유형 해설</h3><div id="typeDeep"></div></div>
+  <div class="grid3" id="deep"></div>
+  <div class="card wide" id="learningGuide"><h3>이 검사를 통해 배우는 미니멀리즘</h3><p id="learningText"></p><div class="grid2" id="scaleLessons"></div></div>
+  <div class="grid2"><div class="card"><h3>7일 실천 처방</h3><ul id="planList"></ul></div><div class="card"><h3>30일 확장 처방</h3><ul id="plan30"></ul></div></div>
+  <div class="card wide"><h3>논문 근거형 해설 카드</h3><div class="grid2" id="evidenceCards"></div></div>
+  <div class="card wide" id="references"><h3>근거 문헌 20</h3><div id="refs"></div></div>
+  <div class="bottom"><button class="btn" onclick="window.print()">PDF 저장</button><button class="btn secondary" onclick="saveCardImage()">결과 카드 이미지 저장</button><button class="btn secondary" onclick="copySummary()">요약 복사</button><button class="btn secondary" onclick="shareLink()">결과 링크 복사</button><button class="btn secondary" onclick="restart()">다시 검사</button></div>
+</section>
+</div>
+<script src="../premium/data.js"></script>
+<script src="../premium/app.js"></script>
+<script src="v2.js"></script>
+</body></html>
