@@ -1,0 +1,31 @@
+# 화면을 한 줄씩 재는 검사. 여기는 여태 **검사가 하나도 없었다.**
+#
+# 다른 세 앱(exam·DT·KMChC)에는 전수 검수가 매번 도는데 이 저장소만 빠져
+# 있었다. 목록에 없으면 아무도 안 본다 — 이 저장소가 통째로 그 짝이었다.
+#
+# 재는 것은 사람 판단이 필요 없는 것들뿐이다: 색 대비·글씨 크기·viewport·
+# 제목 단계·표 머리·깨진 링크.
+name: 화면 전수 검수
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**.md', 'LICENSE']
+  pull_request:
+    paths-ignore: ['**.md', 'LICENSE']
+  # 아무도 안 밀어도 하루 한 번. 실패하면 깃허브가 저장소 주인에게 메일을 보낸다.
+  schedule:
+    - cron: '35 21 * * *'     # 매일 06:35 KST
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: 화면 전수 검수 (대비 · 글씨 · 링크)
+        run: python3 tools/audit_pages.py
